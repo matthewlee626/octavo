@@ -27,14 +27,14 @@ class SoundX extends React.Component{
     render(){
         const score = this.props.score;
         return(
-            <div>
+            <div class="soundcontainer">
                 <div>
-                    <p>
+                    <h3>
                         Score: {score}
-                    </p>  
+                    </h3>  
                 </div>
                 <div>
-                    <button className = "special"
+                    <button 
                         onClick = {() => this.state.isPlaying ? 
                         this.setState({playing: Sound.status.PAUSED, isPlaying: false, buttonValue: "Play"}) : 
                         this.setState({playing: Sound.status.PLAYING, isPlaying: true, buttonValue: "Pause"})}
@@ -43,14 +43,14 @@ class SoundX extends React.Component{
                     </button>
                 </div>
                 <div>
-                    <button className = "special"
+                    <button 
                         onClick = {() => this.handleChange(score + 1)}
                     >
                     Change Score!
                     </button>
                 </div>
                 <div>
-                    <button className = "special"
+                    <button
                         onClick = {() => 
                         this.setState({
                             interval: possibleIntervals[Math.floor(Math.random()*possibleIntervals.length)],
