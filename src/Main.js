@@ -16,7 +16,7 @@ class Main extends React.Component{
     super(props);
     //this.handleScoreChange = this.handleScoreChange.bind(this);
     this.state = {
-      playing: Sound.status.PAUSED,
+      playing: Sound.status.PLAYING,
       renderWhich: 0,  /* 0 for the default, 1 for about*/ 
       score: 0,
       username: '',
@@ -40,15 +40,19 @@ class Main extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     const itemsRef = firebase.database().ref('items');
+    const d = new Date();
+    let time = d.getTime()
     const item = {
       score: this.state.score,
-      username: this.state.username
+      username: this.state.username,
+      date: time,
     }
     itemsRef.push(item);
     this.setState({
       score: 0,
       username: ''
     });
+    window.location.reload();
   }
 
   removeItem(itemId) {
@@ -92,7 +96,7 @@ class Main extends React.Component{
           <div className='container'>
             <div className='sound'>
               <SoundX
-                  url= {"https://raw.githubusercontent.com/matthewlee626/listen/master/src/music/12.mp3"}
+                  //url= {"https://raw.githubusercontent.com/matthewlee626/listen/master/src/music/12.mp3"}
                   playing = {this.state.playing} 
                   loop={true} 
                   speed={1}
@@ -108,20 +112,22 @@ class Main extends React.Component{
                   <button>Add Score</button>
                 </form>
             </section>
-            <section className='display-item'>
-              <div className="wrapper">
-                <ul>
-                  {this.state.items.map((item) => {
-                    return (
-                      <li key={item.id}>
-                        <h3>{item.username === "" ? 'Anonymous' : item.username}</h3>
-                        <p>Score: {item.score}</p>
-                        <button onClick={() => this.removeItem(item.id)}>Remove Item</button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
+            <section className="leaderboard">
+              <h2>Leaderboard</h2>
+              <ul className='list'>
+                    <li key={"header"}>
+                      <h3>Name</h3>
+                      <h3 className="score">Score</h3>
+                    </li>
+                    {this.state.items.map((item) => {
+                      return (
+                        <li key={item.id}>
+                          <p>{item.username === "" ? 'Anonymous' : item.username}</p>
+                          <p>{item.score}</p>
+                        </li>
+                      )
+                    })}
+              </ul>
             </section>
           </div>
           <footer>
@@ -143,30 +149,4 @@ class Main extends React.Component{
   }
 }
 
-/*
-    <div className="App">
-          <header className="App-header">
-            <p style={pStyle}>
-              What interval is this?
-            </p>        
-            <SoundX 
-                url= {"https://raw.githubusercontent.com/matthewlee626/listen/master/src/music/12.mp3"}
-                playing = {this.state.playing} 
-                loop={true} 
-                speed={1}
-                score={gameScore}
-                onScoreChange={this.handleScoreChange}
-              >
-            </SoundX>
-            <div>
-              <form onSubmit={this.handleSubmit}>
-                <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.username} />
-                <button className="special">Add Item</button>
-              </form>
-              
-            </div>
-          </header>
-        </div>
-
-*/
 export default Main;
