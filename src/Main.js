@@ -132,7 +132,7 @@ class Main extends React.Component{
           </div>
           <footer>
             <div className='wrapper'>
-              <p>matthewlee.xyz © 2019</p>
+              <p>matthewlee.xyz © 2020</p>
             </div>
           </footer>
         </div>
