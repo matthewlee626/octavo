@@ -1,3 +1,3 @@
 # Octavo
 
-A small project I did for the CAC.
+A practice tool for the identification of musical intervals.

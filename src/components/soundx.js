@@ -85,13 +85,20 @@ class SoundX extends React.Component{
     }
 
     returnbuttons(amount, correct){
+        let arr = []; // values
+        while(arr.length < amount){
+            var r = Math.floor(Math.random() * 15);
+            if(arr.indexOf(r) === -1) arr.push(r);
+        }
         let toAdd = [];
-        if (correct !== 0) candidates.splice(this.state.interval, 1);
+        let displays= [];
+        // if (correct !== 0) candidates.splice(this.state.interval, 1);
         let incorrect = "";
         for(let i = 0; i < amount; i++){
-            incorrect = Math.floor(Math.random()*candidates.length);
+            incorrect = arr[i];
             let toDisplay = candidates[incorrect];
-            candidates.splice(incorrect, 1);
+            // candidates.splice(incorrect, 1);
+            displays.push(toDisplay)
             toAdd.push(
                 <button 
                     onClick = {() => this.handleChange(this.props.score, false)}
